@@ -1,153 +1,161 @@
-public class Main {
+import java.util.Random;
 
-    public static void main(String[] args) {
+class BlackPanther {
+    String name, area, sex;
+    int age;
+    double weight;
+    boolean mating = false;
 
-        BlackPanther bp = new BlackPanther("Midnight", "Africa", "female", 55.0);
-        BlackPanther bp2 = new BlackPanther("Africa", "male", 55.0);
-        BlackPanther bp3 = new BlackPanther(55.0, "N. Asia", "female");
+    public BlackPanther() {
+    }
 
-        BlackPanther[] bpAr = { bp, bp2, bp3 };
-        BlackPanther temp = new BlackPanther();
+    public BlackPanther(String area, String sex, double weight) {
 
-        bp2.setName("Shadow");
-        bp3.setName("Ngozi");
-        bp.setAge(4);
-        bp2.setAge(4);
-        bp3.setAge(4);
-        bp.eatAnimal(7);
-        bp2.eatAnimal(5);
-        bp3.eatAnimal(13);
+        this.area = area;
+        this.sex = sex;
+        this.weight = weight;
 
-        if (bp.getWeight() >= bp2.getWeight() && bp.getWeight() >= bp3.getWeight()) {
-            System.out.println("The heaviest panther is: " + bp.getName());
-            System.out.println(bp.breed(bp2));
-            System.out.println(bp.breed(bp3));
+    }
 
-        } else if (bp2.getWeight() >= bp.getWeight() && bp2.getWeight() >= bp3.getWeight()) {
+    public BlackPanther(String name, String area, String sex, double weight) {
 
-            System.out.println("The heaviest panther is: " + bp2.getName());
-            System.out.println(bp2.breed(bp));
-            System.out.println(bp2.breed(bp3));
+        this.name = name;
+        this.area = area;
+        this.sex = sex;
+        this.weight = weight;
 
-        } else if (bp3.getWeight() >= bp.getWeight() && bp3.getWeight() >= bp2.getWeight()) {
+    }
 
-            System.out.println("The heaviest panther is: " + bp3.getName());
-            System.out.println(bp3.breed(bp));
-            System.out.println(bp3.breed(bp2));
+    public BlackPanther(double weight, String area, String sex) {
+
+        this.area = area;
+        this.sex = sex;
+        this.weight = weight;
+
+    }
+
+    public BlackPanther(String name, String area, String sex, int age, double weight, boolean mating) {
+
+        this.name = name;
+        this.area = area;
+        this.sex = sex;
+        this.age = age;
+        this.weight = weight;
+        this.mating = mating;
+
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+
+        this.area = area;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+
+        this.sex = sex;
+    }
+
+    public int getAge() {
+
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public double getWeight() {
+
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+
+        this.weight = weight;
+    }
+
+    public boolean getMating() {
+
+        return mating;
+    }
+
+    public void setMating(boolean mating) {
+        this.mating = mating;
+    }
+
+    public void eatAnimal(int weight) {
+
+        this.weight += weight * 0.1;
+    }
+
+    public String breed(BlackPanther bp) {
+        String msg = "";
+        if (!this.area.equals(bp.area) || this.sex.equals(bp.sex)) {
+            msg = "Reproduction not possible between " + name + " and " + bp.getName();
         }
 
-        if (bp.getWeight() <= bp2.getWeight() && bp.getWeight() <= bp3.getWeight()) {
-
-            System.out.println("The lightest panther is: " + bp.getName());
-            System.out.println(bp.breed(bp2));
-            System.out.println(bp.breed(bp3));
-
-        } else if (bp2.getWeight() <= bp.getWeight() && bp2.getWeight() <= bp3.getWeight()) {
-
-            System.out.println("The lightest panther is: " + bp2.getName());
-            System.out.println(bp2.breed(bp));
-            System.out.println(bp2.breed(bp3));
-
-        } else if (bp3.getWeight() <= bp.getWeight() && bp3.getWeight() <= bp2.getWeight()) {
-
-            System.out.println("The lightest panther is: " + bp3.getName());
-            System.out.println(bp3.breed(bp));
-            System.out.println(bp3.breed(bp2));
+        if (!this.sex.equals(bp.sex) && this.area.equals(bp.area)) {
+            msg = "Reproduction of " + name + " and of " + bp.getName() + " has been successful.";
+            mating = true;
+            bp.setMating(true);
         }
 
-        System.out.println(bp.searchFood(1));
-        System.out.println(bp3.searchFood(1));
+        return msg;
+    }
 
-        System.out.println(bp.getAge());
-        System.out.println(bp2.getAge());
-        System.out.println(bp3.getAge());
+    public String searchFood(int years) {
+        Random rnd = new Random();
+        this.age = this.age + years;
+        String result = "";
 
-        if (bp.getAge() <= bp2.getAge() && bp.getAge() <= bp3.getAge()) {
+        int chance = rnd.nextInt(100);
 
-            System.out.println("The youngest panther is " + bp.getName());
-            System.out.println(bp.breed(bp2));
-            System.out.println(bp.breed(bp3));
+        if (chance <= 15) {
 
-        } else if (bp2.getAge() <= bp.getAge() && bp2.getAge() <= bp3.getAge()) {
+            eatAnimal(20);
+            result = name + " ate a 20kg prey.";
 
-            System.out.println("The youngest panther is " + bp2.getName());
-            System.out.println(bp2.breed(bp));
-            System.out.println(bp2.breed(bp3));
+        } else if (chance > 15 && chance <= 40) {
 
-        } else if (bp3.getAge() <= bp.getAge() && bp3.getAge() <= bp2.getAge()) {
+            eatAnimal(10);
+            result = name + " ate a 10kg prey.";
 
-            System.out.println("The youngest panther is " + bp3.getName());
-            System.out.println(bp3.breed(bp));
-            System.out.println(bp3.breed(bp2));
+        } else if (chance > 40 && chance <= 75) {
+
+            eatAnimal(5);
+            result = name + " ate a 5kg prey.";
+
+        } else if (chance > 75 && chance <= 100) {
+
+            eatAnimal(0);
+            result = name + " didnt catch a prey.";
+
         }
 
-        if (bp.getMating() == false) {
-            System.out.println(bp.getName() + " hasnt mated. Searching for food...");
-            System.out.println(bp.searchFood(2));
+        return result;
 
-        } else if (bp2.getMating() == false) {
+    }
 
-            System.out.println(bp2.getName() + " hasnt mated. Searching for food...");
-            System.out.println(bp2.searchFood(2));
+    public String getData() {
 
-        } else if (bp3.getMating() == false) {
-
-            System.out.println(bp3.getName() + " hasnt mated. Searching for food...");
-            System.out.println(bp3.searchFood(2));
-        }
-
-        if (temp.getWeight() >= bp.getWeight() && temp.getWeight() >= bp2.getWeight()
-                && temp.getWeight() >= bp3.getWeight()) {
-            System.out.println("The lightest panther is: " + temp.getData());
-
-        } else if (bp.getWeight() >= temp.getWeight() && bp.getWeight() >= bp2.getWeight()
-                && bp.getWeight() >= bp3.getWeight()) {
-            System.out.println("The lightest panther is: " + bp.getData());
-
-        } else if (bp2.getWeight() >= temp.getWeight() && bp2.getWeight() >= bp.getWeight()
-                && bp2.getWeight() >= bp3.getWeight()) {
-            System.out.println("The lightest panther is: " + bp2.getData());
-
-        } else if (bp3.getWeight() >= temp.getWeight() && bp3.getWeight() >= bp.getWeight()
-                && bp3.getWeight() >= bp2.getWeight()) {
-            System.out.println("The lightest panther is: " + bp2.getData());
-        }
-
-        if (temp.getWeight() <= bp.getWeight() && temp.getWeight() >= bp2.getWeight()
-                && temp.getWeight() >= bp3.getWeight()) {
-            System.out.println("The second heavy panther is: ");
-            System.out.println(temp.getData());
-        } else if (bp.getWeight() >= temp.getWeight() && bp.getWeight() >= bp2.getWeight()
-                && bp.getWeight() <= bp3.getWeight()) {
-            System.out.println("The second heavy panther is: ");
-            System.out.println(bp.getData());
-        } else if (bp2.getWeight() <= temp.getWeight() && bp2.getWeight() >= bp.getWeight()
-                && bp2.getWeight() >= bp3.getWeight()) {
-            System.out.println("The second heavy panther is: ");
-            System.out.println(bp2.getData());
-        } else if (bp3.getWeight() >= temp.getWeight() && bp3.getWeight() >= bp.getWeight()
-                && bp3.getWeight() <= bp2.getWeight()) {
-            System.out.println("The second heavy panther is: ");
-            System.out.println(bp3.getData());
-        }
-
-        if (temp.getWeight() >= bp.getWeight() && temp.getWeight() >= bp2.getWeight() && temp.getWeight() >= bp3
-                .getWeight()) {
-            System.out.println("The heaviest panther is: ");
-            System.out.println(temp.getData());
-        } else if (bp.getWeight() >= temp.getWeight() && bp.getWeight() >= bp2.getWeight()
-                && bp.getWeight() >= bp3.getWeight()) {
-            System.out.println("The heaviest panther is: ");
-            System.out.println(bp.getData());
-        } else if (bp2.getWeight() >= temp.getWeight() && bp2.getWeight() >= bp.getWeight()
-                && bp2.getWeight() >= bp3.getWeight()) {
-            System.out.println("The heaviest panther is: ");
-            System.out.println(bp2.getData());
-        } else if (bp3.getWeight() >= temp.getWeight() && bp3.getWeight() >= bp.getWeight()
-                && bp3.getWeight() >= bp2.getWeight()) {
-            System.out.println("The heaviest panther is: ");
-            System.out.println(bp3.getData());
-        }
+        return "Name: " + name + ", Area: " + area + ", Sex: " + sex + ", Age: " + age + ", Weight: " + weight;
 
     }
 }
